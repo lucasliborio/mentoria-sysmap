@@ -1,1 +1,4 @@
-export class ArrayValidation {}
+export class ArrayValidation {
+    letters: string[] = []
+    numbers: number[] = []
+}
