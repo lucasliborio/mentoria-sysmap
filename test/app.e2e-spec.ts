@@ -1,8 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { ArrayValidationModule } from 'src/array-validation/array-validation.module';
-
+import { ArrayValidationModule } from '../src/array-validation/array-validation.module';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
@@ -16,10 +15,9 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/array-validation-post (POST)', () => {
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .post('/array-validation/validate')
+      .expect(201)
   });
 });
