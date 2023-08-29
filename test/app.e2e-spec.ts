@@ -14,11 +14,33 @@ describe('AppController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
   });
-
-  it('/array-validation (POST) | with correct body', () => {
+  it('POST /array-validation/validate without body', () => {
     return request(app.getHttpServer())
       .post('/array-validation/validate')
-      .send({data: 'fdsfs32'})
+      .expect(400)
+  });
+  it('POST /array-validation/validate with incorret body', () => {
+    return request(app.getHttpServer())
+      .post('/array-validation/validate')
+      .send({data: ''})
+      .expect(400)
+  });
+  it('POST /array-validation/validate with null body', () => {
+    return request(app.getHttpServer())
+      .post('/array-validation/validate')
+      .send({data: null})
+      .expect(400)
+  });
+  it('POST /array-validation/validate with others characters in body', () => {
+    return request(app.getHttpServer())
+      .post('/array-validation/validate')
+      .send({data: '--fasf;wefwe/'})
+      .expect(400)
+  });
+  it('POST /array-validation/validate with correct body', () => {
+    return request(app.getHttpServer())
+      .post('/array-validation/validate')
+      .send({data: 'dasd123484a65sdasd'})
       .expect(201)
   });
 });
