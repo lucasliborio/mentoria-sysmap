@@ -15,9 +15,10 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/array-validation-post (POST)', () => {
+  it('/array-validation (POST) | with correct body', () => {
     return request(app.getHttpServer())
       .post('/array-validation/validate')
+      .send({data: 'fdsfs32'})
       .expect(201)
   });
 });
