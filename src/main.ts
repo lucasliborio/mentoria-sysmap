@@ -1,9 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 
-import { ArrayValidationModule } from './array-validation/array-validation.module';
+import { StringCheckModule } from './string-check/string-check.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ArrayValidationModule);
+  const app = await NestFactory.create(StringCheckModule);
   await app.listen(3000);
 }
 bootstrap();

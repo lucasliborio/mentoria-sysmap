@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { ArrayValidationDto } from './dto/array-validation.dto';
-import { ArrayValidation } from './entities/array-validation.entity';
+import { StringCheckResult } from './entities/string-check.entity';
 
 @Injectable()
-export class ArrayValidationService {
-  validate(data: string): ArrayValidation {
+export class StringCheckService {
+  result(data: string): StringCheckResult {
     const numbers: Array<number> = []
     const letters: Array<string> = []
 
