@@ -9,7 +9,6 @@
     "build": "nest build",
     "sam:build": "rm -rf .aws-sam && sam build", 
     "prepare:deploy": "npm run build && cp package.json dist && npm run sam:build",
-    "sam:api": "sam local start-api",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

@@ -1,38 +1,34 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Mentoria SysMap
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+- Esse projeto foi realizado durante a mentoria da empresa SysMap.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## String check
 
-## Description
+- **string check** é uma aplicação que checa analisa uma **string** que deve conter somente letras e numeros e retorna como resultado dois arrays, um de numeros e outro de letras que foram encotradas nessa string.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
+```js
+// input 
+{
+  "data": "12345abc"
+}
+// output
+{
+  numbers:[1,2,3,4,5]
+  letters:["a", "b", "c"]
+}
 ```
 
-## Running the app
+## Instalação
+
+```bash
+npm install
+```
+
+## Rodando a aplicação
+
+Para rodar a aplicação temos algumas alternativas. Vamos as opções:
+
+#### Utilizando o proprio NestJS - porta 3000
 
 ```bash
 # development
@@ -45,7 +41,68 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+```curl
+
+curl --request POST \
+  --url http://localhost:3000/string-check/result \
+  --header 'Content-Type: application/json' \
+  --data '{
+ "data": ""
+}'
+```
+
+#### Utilizando AWS SAM - [Necessario instalar AWS SAM CLI](https://docs.aws.amazon.com/pt_br/serverless-application-model/latest/developerguide/install-sam-cli.html)
+
+- O **AWS SAM** possui algumas formas de testar os recursos que irão subir pro **AWS CloudFormation**
+
+**Obs.:** Após instalar o **AWS SAM** necessario rodar o comando abaixo parar buildar o codigo da aplicação para dentro do folder **.aws-sam**
+
+```bash
+# Deixa a aplicação pronta para teste e deploy 
+$ npm run prepare:deploy
+```
+
+- Após rodar o comando acima a aplicação fica pronta para ser testada.
+
+```bash
+
+# execute e teste sua função AWS serverless localmente como uma API HTTP
+$ sam local start-api
+
+# envia mensagem direto para o lambda
+$ sam local invoke -e events/string-check.json
+```
+
+- Para simular recursos da AWS localmente o **AWS SAM CLI** utiliza containers **Docker** - **[Instalação Docker](https://docs.docker.com/engine/install/)**
+- Qualquer duvida a respeito do **AWS SAM CLI** - **[AWS SAM CLI Docs](https://docs.aws.amazon.com/pt_br/serverless-application-model/latest/developerguide/using-sam-cli.html)**
+
+## Deploy
+
+- Para realizar o deploy é simples, após ter rodado o comando **npm run prepare:deploy** execute:
+
+```bash
+# Recomendavel na primeira vez
+$ sam deploy --guided
+```
+
+- No final do deploy uma url para o API Gateway será gerada.
+
+```curl
+curl --request POST \
+  --url https:url-gerada-no-deploy/string-check/result \
+  --header 'Content-Type: application/json' \
+  --data '{
+ "data": ""
+}'
+```
+
+* Para derrubar stack da **AWS Cloud Formation** basta executar o comando no diretorio do projeto:
+
+```bash
+sam delete
+```
+
+## Testes
 
 ```bash
 # unit tests
@@ -57,17 +114,3 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
