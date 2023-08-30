@@ -4,7 +4,7 @@
 
 ## String check
 
-- **string check** é uma aplicação que checa analisa uma **string** que deve conter somente letras e numeros e retorna como resultado dois arrays, um de numeros e outro de letras que foram encotradas nessa string.
+- **string check** é uma aplicação que analisa uma **string** que deve conter somente letras e numeros e retorna como resultado dois arrays, um contendo numeros e contendo letras que foram encontradas nessa string.
 
 ```js
 // input 
@@ -28,7 +28,7 @@ npm install
 
 Para rodar a aplicação temos algumas alternativas. Vamos as opções:
 
-#### Utilizando o proprio NestJS - porta 3000
+#### Utilizando o proprio NestJS - localhost:3000/string-check/result
 
 ```bash
 # development
@@ -69,7 +69,7 @@ $ npm run prepare:deploy
 # execute e teste sua função AWS serverless localmente como uma API HTTP
 $ sam local start-api
 
-# envia mensagem direto para o lambda
+# envia mensagem direto para o lambda local
 $ sam local invoke -e events/string-check.json
 ```
 
@@ -99,7 +99,7 @@ curl --request POST \
 * Para derrubar stack da **AWS Cloud Formation** basta executar o comando no diretorio do projeto:
 
 ```bash
-sam delete
+$ sam delete
 ```
 
 ## Testes
