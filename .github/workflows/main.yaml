@@ -1,0 +1,54 @@
+name: Deploy Lambda with SAM
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ vars.DEPLOYMENT_ROLE }}
+          aws-region: sa-east-1
+
+      - name: Install SAM
+        uses: aws-actions/setup-sam@v2
+        with:
+          sam-cli-version: latest
+
+      - name: Install dependencies and run tests
+        run: |
+          npm install
+          npm run test
+          npm run test:e2e
+          npm run build
+
+      - name: Building SAM
+        run: sam build --template ./template.yaml
+      
+      - name: Copy node_modules to SAM build directory
+        run: cp -r node_modules .aws-sam/build/MentoriaApi
+
+      - name: Deploying SAM
+        run: sam deploy --template-file .aws-sam/build/template.yaml --stack-name sysmap-mentoria --capabilities CAPABILITY_IAM --region sa-east-1 --resolve-s3
