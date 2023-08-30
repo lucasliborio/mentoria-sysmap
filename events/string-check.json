@@ -1,0 +1,8 @@
+{
+    "httpMethod": "POST",
+    "path": "/string-check/result",
+    "body": "{\"data\":\"a465as1a1a6a4s4dsasda7a9aasa\"}",
+    "headers": {
+        "Content-type": "application/json"
+    }
+}

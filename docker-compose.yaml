@@ -1,0 +1,12 @@
+version: "3"
+services: 
+  mentoria-api:
+    working_dir: /application
+    image: node:latest
+    restart: always
+    command: bash -c "npm start"
+    volumes:
+    - .:/application
+    ports: 
+      - "3000:3000"
+    

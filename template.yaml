@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Mentoria Sysmap
+Globals:
+  Function:
+    Timeout: 30
+
+Resources:
+  MentoriaApi:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: ./lambda.handler
+      Runtime: nodejs18.x
+      Architectures:
+      - x86_64
+      Events:
+        ApiLambda:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: any
+      CodeUri: dist

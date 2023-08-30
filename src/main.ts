@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-
 import { StringCheckModule } from './string-check/string-check.module';
 
 async function bootstrap() {
