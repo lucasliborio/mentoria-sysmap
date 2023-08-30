@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { INestApplication } from '@nestjs/common';
-import  { Express} from 'express';
+import { Express } from 'express';
 import { Server } from 'http';
 import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { createServer, proxy, Response } from 'aws-serverless-express';
@@ -23,7 +23,7 @@ async function createExpressApp(
 async function bootstrap(): Promise<Server> {
   const expressApp = express();
   const app = await createExpressApp(expressApp);
-  
+
   await app.init();
   return createServer(expressApp);
 }

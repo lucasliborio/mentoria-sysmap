@@ -44,11 +44,11 @@ jobs:
           npm run test:e2e
           npm run build
 
+      - name: Copy package.json to dist directory
+        run: cp package.json dist
+
       - name: Building SAM
         run: sam build --template ./template.yaml
-      
-      - name: Copy node_modules to SAM build directory
-        run: cp -r node_modules .aws-sam/build/MentoriaApi
 
       - name: Deploying SAM
-        run: sam deploy --stack-name sysmap-mentoria --capabilities CAPABILITY_IAM --region sa-east-1 --resolve-s3
+        run: sam deploy --template-file .aws-sam/build/template.yaml --stack-name sysmap-mentoria --capabilities CAPABILITY_IAM --region sa-east-1 --resolve-s3
